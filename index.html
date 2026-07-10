@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>imperfect soul — Varsha Anand</title>
+<meta name="description" content="imperfect soul — paintings, digital prints and hand-shaped clay miniatures by Varsha Anand, made in Bangalore beyond the 9-to-5.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Mono:wght@400;500&family=Karla:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14120F;
+    --ink-soft:#1D1A15;
+    --ink-line: rgba(239,232,216,0.12);
+    --paper:#EFE8D8;
+    --paper-dim: rgba(239,232,216,0.72);
+    --gold:#B8923F;
+    --gold-soft: rgba(184,146,63,0.35);
+    --tide:#2C4C47;
+    --tide-soft:#3C645D;
+    --clay:#A15A34;
+    --ash:#9A9384;
+    --sold:#5B5750;
+    --radius: 2px;
+    --maxw: 1240px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Karla', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    margin:0;
+    letter-spacing:0.01em;
+  }
+  .eyebrow{
+    font-family:'DM Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  ::selection{background:var(--gold); color:var(--ink);}
+
+  /* Scroll progress fish */
+  #swim-track{
+    position:fixed; top:0; left:0; width:100%; height:3px;
+    background:var(--ink-line); z-index:999;
+  }
+  #swim-fish{
+    position:fixed; top:-9px; left:0; width:26px; height:26px;
+    z-index:1000; transform:translateX(0);
+    filter:drop-shadow(0 0 4px rgba(184,146,63,0.5));
+    will-change:transform;
+  }
+
+  /* NAV */
+  header{
+    position:sticky; top:0; z-index:500;
+    background:rgba(20,18,15,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--ink-line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:78px;
+  }
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand svg{width:28px; height:28px;}
+  .brand-text{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-size:22px; letter-spacing:0.02em;
+  }
+  .navlinks{display:flex; align-items:center; gap:36px;}
+  .navlinks a{
+    font-family:'DM Mono', monospace; font-size:12px;
+    letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--paper-dim);
+    padding:6px 0; border-bottom:1px solid transparent;
+    transition:color .25s, border-color .25s;
+  }
+  .navlinks a:hover{color:var(--gold); border-color:var(--gold);}
+  .navlinks .ig{
+    display:flex; align-items:center; color:var(--paper);
+  }
+  .navlinks .ig svg{width:18px; height:18px;}
+  #menu-toggle{display:none; background:none; border:none; color:var(--paper); cursor:pointer;}
+
+  /* HERO */
+  .hero{
+    position:relative; min-height:92vh; display:flex; align-items:flex-end;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute; inset:0;
+    background-size:cover; background-position:center 30%;
+  }
+  .hero-bg::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(20,18,15,0.35) 0%, rgba(20,18,15,0.55) 55%, rgba(20,18,15,0.96) 100%);
+  }
+  .hero-fish{
+    position:absolute; right:-40px; top:8%; width:340px; opacity:0.16;
+    animation:drift 14s ease-in-out infinite;
+  }
+  @keyframes drift{
+    0%,100%{transform:translateY(0) rotate(-4deg);}
+    50%{transform:translateY(24px) rotate(2deg);}
+  }
+  .hero-inner{position:relative; z-index:2; padding-bottom:76px; width:100%;}
+  .hero-eyebrow{margin-bottom:22px;}
+  .hero h1{
+    font-size:clamp(40px, 6.4vw, 84px);
+    font-style:italic; font-weight:500;
+    max-width:15ch; line-height:1.04;
+    color:var(--paper);
+  }
+  .hero p.lede{
+    margin-top:26px; max-width:46ch;
+    font-size:18px; color:var(--paper-dim);
+  }
+  .hero-cta{
+    margin-top:40px; display:inline-flex; align-items:center; gap:10px;
+    font-family:'DM Mono', monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--gold); cursor:pointer; border-bottom:1px solid var(--gold-soft); padding-bottom:6px;
+  }
+  .hero-cta svg{width:14px; height:14px; animation:bob 1.8s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(5px);}}
+
+  /* INTRO STRIP */
+  .intro{
+    padding:90px 0; text-align:center;
+    border-bottom:1px solid var(--ink-line);
+  }
+  .intro-mark{width:34px; height:34px; margin:0 auto 28px; opacity:0.8;}
+  .intro blockquote{
+    font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:500;
+    font-size:clamp(24px,3.4vw,38px); max-width:22ch; margin:0 auto; line-height:1.3;
+    color:var(--paper);
+  }
+  .intro cite{
+    display:block; margin-top:22px; font-style:normal; font-family:'DM Mono',monospace;
+    font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ash);
+  }
+
+  /* SECTION HEADERS */
+  .section{padding:100px 0;}
+  .section.alt{background:var(--ink-soft);}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:40px;
+    margin-bottom:56px; flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-size:clamp(30px,4vw,48px); font-style:italic; max-width:16ch; margin-top:14px;
+  }
+  .section-head p{max-width:34ch; color:var(--paper-dim); font-size:15px; padding-bottom:6px;}
+
+  /* TABS */
+  .tabs{display:flex; gap:0; flex-wrap:wrap; margin-bottom:44px; border-bottom:1px solid var(--ink-line);}
+  .tab{
+    font-family:'DM Mono', monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--paper-dim); background:none; border:none; cursor:pointer;
+    padding:14px 22px 14px 0; margin-right:24px; position:relative; top:1px;
+    border-bottom:2px solid transparent;
+  }
+  .tab.active{color:var(--gold); border-bottom-color:var(--gold);}
+  .tab:hover{color:var(--paper);}
+
+  /* GRID - 3x3 */
+  .grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:40px 30px;
+  }
+  .card{
+    cursor:pointer; position:relative;
+  }
+  .card .frame{
+    position:relative; overflow:hidden; background:var(--ink-soft);
+    aspect-ratio:4/5;
+  }
+  .card .frame img{
+    width:100%; height:100%; object-fit:cover;
+    transition:transform .7s cubic-bezier(.2,.7,.3,1), filter .5s ease;
+  }
+  .card:hover .frame img{transform:scale(1.06);}
+  .card.is-sold .frame img{filter:grayscale(0.28) brightness(0.92);}
+  .card.is-sold:hover .frame img{filter:none;}
+  .badge{
+    position:absolute; top:12px; left:12px;
+    font-family:'DM Mono', monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase;
+    padding:5px 10px; background:rgba(20,18,15,0.82); border:1px solid var(--gold-soft); color:var(--gold);
+  }
+  .badge.sold{border-color:var(--sold); color:var(--ash);}
+  .card .meta{padding-top:16px;}
+  .card h3{font-size:22px; font-style:italic;}
+  .card .medium{
+    font-family:'DM Mono', monospace; font-size:11px; letter-spacing:0.06em;
+    color:var(--ash); margin-top:6px;
+  }
+  .card .desc{
+    font-size:13.5px; color:var(--paper-dim); margin-top:10px; line-height:1.55;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .card .price-row{
+    display:flex; justify-content:space-between; align-items:center; margin-top:12px;
+  }
+  .price-tag{font-family:'DM Mono', monospace; font-size:13px; color:var(--gold);}
+  .price-tag.muted{color:var(--ash);}
+
+  /* CLAY - smaller cards, denser grid */
+  .grid.clay{grid-template-columns:repeat(4, 1fr); gap:30px 24px;}
+  .grid.clay .frame{aspect-ratio:1/1;}
+  .grid.clay h3{font-size:16px; font-style:normal; font-family:'Karla',sans-serif; font-weight:500;}
+
+  /* PAGINATION */
+  .pagination{
+    display:flex; align-items:center; justify-content:center; gap:8px; margin-top:56px;
+  }
+  .page-btn{
+    font-family:'DM Mono', monospace; font-size:13px; min-width:36px; height:36px;
+    display:flex; align-items:center; justify-content:center;
+    background:none; border:1px solid var(--ink-line); color:var(--paper-dim); cursor:pointer;
+    transition:border-color .2s, color .2s;
+  }
+  .page-btn:hover{border-color:var(--gold); color:var(--gold);}
+  .page-btn.active{border-color:var(--gold); color:var(--gold); background:rgba(184,146,63,0.1);}
+  .page-btn:disabled{opacity:0.35; cursor:not-allowed;}
+  .page-btn:disabled:hover{border-color:var(--ink-line); color:var(--paper-dim);}
+  .page-arrow svg{width:14px; height:14px;}
+  .page-ellipsis{color:var(--ash); font-family:'DM Mono',monospace; font-size:13px; padding:0 4px;}
+
+  /* MODAL */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(10,9,7,0.9);
+    z-index:2000; display:none; align-items:center; justify-content:center;
+    padding:32px; opacity:0; transition:opacity .3s;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-overlay.show{opacity:1;}
+  .modal{
+    background:var(--ink-soft); max-width:980px; width:100%; max-height:88vh; overflow:auto;
+    display:grid; grid-template-columns:1.1fr 1fr; border:1px solid var(--ink-line);
+    transform:translateY(16px) scale(.98); transition:transform .35s cubic-bezier(.2,.7,.3,1);
+  }
+  .modal-overlay.show .modal{transform:translateY(0) scale(1);}
+  .modal-img{background:#000;}
+  .modal-img img{width:100%; height:100%; object-fit:contain; max-height:88vh;}
+  .modal-body{padding:44px; position:relative;}
+  .modal-close{
+    position:absolute; top:18px; right:18px; background:none; border:none; color:var(--paper);
+    cursor:pointer; opacity:0.7; padding:6px;
+  }
+  .modal-close:hover{opacity:1;}
+  .modal-body h3{font-size:30px; font-style:italic; margin-bottom:6px;}
+  .modal-body .medium{font-family:'DM Mono',monospace; font-size:12px; color:var(--ash); letter-spacing:0.05em;}
+  .modal-story{margin-top:22px; color:var(--paper-dim); font-size:15px; line-height:1.75;}
+  .price-block{margin-top:28px; border-top:1px solid var(--ink-line); padding-top:22px;}
+  .price-block .label{font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:10px;}
+  .price-line{display:flex; justify-content:space-between; font-size:14px; color:var(--paper-dim); padding:4px 0; border-bottom:1px dashed var(--ink-line);}
+  .price-single{font-family:'DM Mono',monospace; font-size:22px; color:var(--gold);}
+  .inquire-btn{
+    margin-top:30px; display:inline-flex; align-items:center; gap:10px;
+    background:var(--gold); color:var(--ink); font-family:'DM Mono',monospace;
+    font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+    padding:14px 26px; border:none; cursor:pointer; transition:background .25s;
+  }
+  .inquire-btn:hover{background:#cba652;}
+  .inquire-btn svg{width:16px; height:16px;}
+  .sold-note{
+    margin-top:30px; font-family:'DM Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ash);
+    border:1px solid var(--ink-line); display:inline-block; padding:12px 18px;
+  }
+
+  /* ABOUT */
+  .about-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:70px; align-items:center;}
+  .about-img{position:relative;}
+  .about-img img{width:100%; aspect-ratio:4/5; object-fit:cover;}
+  .about-img .ring{
+    position:absolute; inset:-18px; border:1px solid var(--gold-soft); z-index:-1; pointer-events:none;
+  }
+  .about-quote{
+    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:26px; color:var(--paper); margin-bottom:24px; line-height:1.35;
+  }
+  .about-body p{color:var(--paper-dim); font-size:15.5px; margin:0 0 16px;}
+  .about-links{margin-top:32px; display:flex; flex-direction:column; gap:14px;}
+  .about-links a{
+    display:flex; align-items:center; gap:10px; font-family:'DM Mono',monospace; font-size:13px;
+    letter-spacing:0.06em; color:var(--paper-dim); width:fit-content; border-bottom:1px solid transparent;
+    transition:color .2s, border-color .2s;
+  }
+  .about-links a:hover{color:var(--gold); border-color:var(--gold);}
+  .about-links svg{width:16px; height:16px;}
+
+  /* JOURNAL */
+  .journal-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:2px; background:var(--ink-line);}
+  .journal-card{background:var(--ink); padding:34px;}
+  .journal-card .eyebrow{color:var(--tide-soft);}
+  .journal-card h4{font-size:21px; font-style:italic; margin:14px 0 12px;}
+  .journal-card p{color:var(--paper-dim); font-size:14px; margin:0;}
+
+  /* FOOTER */
+  footer{padding:70px 0 40px; border-top:1px solid var(--ink-line);}
+  .footer-top{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px; padding-bottom:40px; border-bottom:1px solid var(--ink-line);}
+  .footer-mark{display:flex; align-items:center; gap:12px;}
+  .footer-mark svg{width:30px; height:30px;}
+  .footer-social{display:flex; gap:22px;}
+  .footer-social a{color:var(--paper-dim); transition:color .2s;}
+  .footer-social a:hover{color:var(--gold);}
+  .footer-social svg{width:20px; height:20px;}
+  .footer-bottom{
+    display:flex; justify-content:space-between; padding-top:26px; flex-wrap:wrap; gap:10px;
+    font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.05em; color:var(--ash);
+  }
+
+  @media (max-width:1080px){
+    .grid{grid-template-columns:repeat(2, 1fr);}
+    .grid.clay{grid-template-columns:repeat(3, 1fr);}
+  }
+  @media (max-width:860px){
+    .navlinks{
+      position:fixed; top:78px; left:0; right:0; background:var(--ink);
+      flex-direction:column; align-items:flex-start; padding:24px 32px; gap:20px;
+      border-bottom:1px solid var(--ink-line);
+      transform:translateY(-140%); transition:transform .3s; z-index:400;
+    }
+    .navlinks.open{transform:translateY(0);}
+    #menu-toggle{display:block;}
+    .modal{grid-template-columns:1fr;}
+    .modal-img img{max-height:44vh;}
+    .about-grid{grid-template-columns:1fr; gap:40px;}
+    .section{padding:70px 0;}
+    .hero-fish{width:200px;}
+    .wrap{padding:0 22px;}
+  }
+  @media (max-width:640px){
+    .grid{grid-template-columns:1fr; gap:36px;}
+    .grid.clay{grid-template-columns:repeat(2, 1fr); gap:24px 18px;}
+    .section-head{flex-direction:column; align-items:flex-start;}
+    .tabs{overflow-x:auto; flex-wrap:nowrap; -webkit-overflow-scrolling:touch;}
+    .tab{white-space:nowrap;}
+    .hero h1{font-size:clamp(32px,9vw,52px);}
+    .footer-top{flex-direction:column; align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<div id="swim-track"></div>
+<svg id="swim-fish" viewBox="0 0 64 40" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2 20 C 10 4, 34 2, 46 12 C 52 6, 60 6, 62 10 C 58 14, 58 18, 62 20 C 58 22, 58 26, 62 30 C 60 34, 52 34, 46 28 C 34 38, 10 36, 2 20 Z" fill="none" stroke="#B8923F" stroke-width="2"/>
+  <circle cx="14" cy="17" r="1.6" fill="#B8923F"/>
+</svg>
+
+<header>
+  <nav class="wrap">
+    <a href="#top" class="brand">
+      <svg viewBox="0 0 64 40" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 20 C 10 4, 34 2, 46 12 C 52 6, 60 6, 62 10 C 58 14, 58 18, 62 20 C 58 22, 58 26, 62 30 C 60 34, 52 34, 46 28 C 34 38, 10 36, 2 20 Z" fill="none" stroke="#EFE8D8" stroke-width="2.4"/>
+        <circle cx="14" cy="17" r="1.8" fill="#EFE8D8"/>
+      </svg>
+      <span class="brand-text">imperfect soul</span>
+    </a>
+    <div class="navlinks" id="navlinks">
+      <a href="#collection">Collection</a>
+      <a href="#clay">Clay</a>
+      <a href="#about">About</a>
+      <a href="#journal">Journal</a>
+      <a href="#contact">Contact</a>
+      <a class="ig" href="https://www.instagram.com/theimperfectsoul_varsha?igsh=Znp3bXl3a3RsdjJl&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+      </a>
+    </div>
+    <button id="menu-toggle" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </nav>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-bg" id="hero-bg"></div>
+  <svg class="hero-fish" viewBox="0 0 64 40" xmlns="http://www.w3.org/2000/svg">
+    <path d="M2 20 C 10 4, 34 2, 46 12 C 52 6, 60 6, 62 10 C 58 14, 58 18, 62 20 C 58 22, 58 26, 62 30 C 60 34, 52 34, 46 28 C 34 38, 10 36, 2 20 Z" fill="none" stroke="#EFE8D8" stroke-width="1.4"/>
+  </svg>
+  <div class="wrap hero-inner">
+    <div class="eyebrow hero-eyebrow">Varsha Anand · Bangalore</div>
+    <h1>art for the parts of you<br>still becoming.</h1>
+    <p class="lede">Paintings, digital prints and hand-shaped clay, made beyond the 9-to-5 — imperfect on purpose, honest by design.</p>
+    <div class="hero-cta" onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})">
+      View the collection
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
+    </div>
+  </div>
+</section>
+
+<section class="intro">
+  <div class="wrap">
+    <svg class="intro-mark" viewBox="0 0 64 40" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 20 C 10 4, 34 2, 46 12 C 52 6, 60 6, 62 10 C 58 14, 58 18, 62 20 C 58 22, 58 26, 62 30 C 60 34, 52 34, 46 28 C 34 38, 10 36, 2 20 Z" fill="none" stroke="#B8923F" stroke-width="1.6"/>
+    </svg>
+    <blockquote>"The most honest thing a person can be is unfinished."</blockquote>
+    <cite>— from the artist's notebook</cite>
+  </div>
+</section>
+
+<section class="section" id="collection">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">The Collection</div>
+        <h2>Paintings &amp; prints from a decade of odd hours.</h2>
+      </div>
+      <p>Every piece is tagged as it stands today — originals marked sold stay here as part of the record.</p>
+    </div>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-filter="all">All Work</button>
+      <button class="tab" data-filter="ACRYLIC ON CANVAS">Acrylic on Canvas</button>
+      <button class="tab" data-filter="DIGITAL">Digital Prints</button>
+      <button class="tab" data-filter="GOUACHE/ACRYLIC PENS DIGITAL PRINTS">Gouache &amp; Marker Prints</button>
+    </div>
+    <div class="grid" id="collection-grid"></div>
+    <div class="pagination" id="collection-pagination"></div>
+  </div>
+</section>
+
+<section class="section alt" id="clay">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Clay Miniatures</div>
+        <h2>Shaped by hand, one afternoon at a time.</h2>
+      </div>
+      <p>Magnets, mini vases, charms and pairs — made on a desk that has seen too many creative crises.</p>
+    </div>
+    <div class="tabs" id="clay-tabs">
+      <button class="tab active" data-filter="all">All Clay</button>
+      <button class="tab" data-filter="Fridge Magnets">Fridge Magnets</button>
+      <button class="tab" data-filter="Vases & Trinkets">Vases &amp; Trinkets</button>
+      <button class="tab" data-filter="Keychains & Charms">Keychains &amp; Charms</button>
+      <button class="tab" data-filter="Pairs & Singles">Pairs &amp; Singles</button>
+    </div>
+    <div class="grid clay" id="clay-grid"></div>
+    <div class="pagination" id="clay-pagination"></div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="wrap about-grid">
+    <div class="about-img">
+      <div class="ring"></div>
+      <img src="images/row55.jpg" alt="Breathe — signature artwork by Varsha Anand">
+    </div>
+    <div>
+      <div class="eyebrow" style="margin-bottom:18px;">About the Artist</div>
+      <p class="about-quote">"imperfect soul began as a realisation to stop being someone else."</p>
+      <div class="about-body">
+        <p>I'm Varsha Anand — artist, dreamer, and a collector of quiet moments. I work across paintings, digital prints, and clay miniatures, each medium being a different language for the same conversation.</p>
+        <p>The fish symbol is a reminder of that, from my signature artwork "Breathe" — something I created in memory of time spent on an Andaman holiday. It grew into a brand because people kept asking if they could take pieces of it home. Now they can.</p>
+        <p>I work from Bangalore, beyond my 9-to-5, usually at odd hours, always with good music. My artworks are not standard, modular or perfect — they're made with lots of passion, joy and honesty. My clay collections are made by hand, every magnet and mini vase shaped on a desk that has seen too many creative crises.</p>
+      </div>
+      <div class="about-links">
+        <a href="https://www.instagram.com/theimperfectsoul_varsha?igsh=Znp3bXl3a3RsdjJl&utm_source=qr" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+          @theimperfectsoul_varsha
+        </a>
+        <a href="https://youtube.com/@imperfectsoul_varsha?si=16cyU5srvoAgaQQ7" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="12" rx="3"/><path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>
+          @imperfectsoul_varsha
+        </a>
+        <a href="mailto:imperfectsoul.design@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          imperfectsoul.design@gmail.com
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="journal">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">From the Journal</div>
+        <h2>Notes from the studio.</h2>
+      </div>
+      <p>Short, honest entries on process, clay, and what the fish means.</p>
+    </div>
+    <div class="journal-grid">
+      <div class="journal-card">
+        <div class="eyebrow">May 2024</div>
+        <h4>Why I start every painting at 4am</h4>
+        <p>There's something about the hour before light that strips away self-consciousness. I've painted some of my most honest work in complete darkness, guided only by what feels true.</p>
+      </div>
+      <div class="journal-card">
+        <div class="eyebrow">April 2024 · Clay</div>
+        <h4>The accidental magnet collection</h4>
+        <p>It started as leftover clay from a larger piece. Now the magnets have their own waiting list.</p>
+      </div>
+      <div class="journal-card">
+        <div class="eyebrow">March 2024 · Reflection</div>
+        <h4>On naming a brand after your deepest insecurity</h4>
+        <p>"Imperfect" felt like a risk. Turns out it was the most honest thing I've ever published.</p>
+      </div>
+      <div class="journal-card">
+        <div class="eyebrow">February 2024 · Behind the Work</div>
+        <h4>The fish symbol, and what it means to me</h4>
+        <p>The logo didn't come from a design brief. It came from a doodle in a notebook at 2am, during a week I'd rather not remember clearly.</p>
+      </div>
+      <div class="journal-card">
+        <div class="eyebrow">January 2024 · Clay</div>
+        <h4>Making my first miniature vase</h4>
+        <p>Six failed attempts. One tiny vase. A lot of clay under my nails.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-mark">
+        <svg viewBox="0 0 64 40" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 20 C 10 4, 34 2, 46 12 C 52 6, 60 6, 62 10 C 58 14, 58 18, 62 20 C 58 22, 58 26, 62 30 C 60 34, 52 34, 46 28 C 34 38, 10 36, 2 20 Z" fill="none" stroke="#EFE8D8" stroke-width="2"/>
+        </svg>
+        <span class="brand-text">imperfect soul</span>
+      </div>
+      <div class="footer-social">
+        <a href="mailto:imperfectsoul.design@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        </a>
+        <a href="https://www.instagram.com/theimperfectsoul_varsha?igsh=Znp3bXl3a3RsdjJl&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+        </a>
+        <a href="https://youtube.com/@imperfectsoul_varsha?si=16cyU5srvoAgaQQ7" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="12" rx="3"/><path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> imperfect soul · Varsha Anand</span>
+      <span>Bangalore, India</span>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-img"><img id="modal-image" src="" alt=""></div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const CATALOG = [{"id": "art2", "category": "ACRYLIC ON CANVAS", "title": "HIGH TIDE", "image": "row2.jpg", "medium_line": "24 × 24 inches · Acrylic on Canvas · 2018", "story": "A quiet school of life moves beneath the moon’s pull — carrying the weight of tides, fear, and survival. The piece reflects those moments when the world makes us feel small, reminding us that even the heaviest currents are only temporary.", "year": 2018, "price": "13000", "sold": true, "status": "Original · Sold"}, {"id": "art3", "category": "ACRYLIC ON CANVAS", "title": "SUMMER LIFE", "image": "row3.jpg", "medium_line": "16 × 20 inches · Acrylic on Canvas · 2018", "story": "A fleeting glimpse of summer suspended in motion — waves crashing, children wandering, strangers briefly becoming part of the same story. The piece captures the warmth, freedom, and quiet nostalgia of days that disappear far too quickly.", "year": 2018, "price": "3000", "sold": true, "status": "Original · Sold"}, {"id": "art4", "category": "ACRYLIC ON CANVAS", "title": "BIRDS OF A FEATHER", "image": "row4.jpg", "medium_line": "16 × 20 inches · Acrylic on Canvas · 2018", "story": "Inspired by the vibrant spirit of Jodhpur, this piece blends the stillness of a wandering soul with the gentle rhythm of birds in flight. Rich colours and textured strokes echo the warmth, culture, and quiet calm woven into the heart of Rajasthan.", "year": 2018, "price": "3000", "sold": true, "status": "Original · Sold"}, {"id": "art5", "category": "ACRYLIC ON CANVAS", "title": "BALLERINA", "image": "row5.jpg", "medium_line": "16 × 20 inches · Acrylic on Canvas · 2018", "story": "Caught between movement and stillness, the ballerina rises with effortless grace — a portrait of freedom, poise, and quiet strength. Flowing strokes and soft motion capture the beauty of surrendering completely to the rhythm within.", "year": 2018, "price": "3000", "sold": true, "status": "Original · Sold"}, {"id": "art6", "category": "ACRYLIC ON CANVAS", "title": "COLORS OF THE OCEAN", "image": "row6.jpg", "medium_line": "10 × 12 inches · Acrylic on Canvas · 2018", "story": "Glowing jellyfish drift through shifting tides, absorbing and reflecting colours like fragments of a rainbow beneath the sea. The piece explores transparency, emotion, and the quiet beauty of embracing ever-changing perspectives.", "year": 2018, "price": "2000", "sold": true, "status": "Original · Sold"}, {"id": "art7", "category": "ACRYLIC ON CANVAS", "title": "RED", "image": "row7.jpg", "medium_line": "32 × 16 inches · Acrylic on Canvas · 2018", "story": "Inspired by the Rainbow Mountains of China, this piece contrasts vibrant earthly textures against deep darkness — a reflection of hope that continues to exist even in uncertain moments. Bold layers of colour celebrate the resilience and quiet brilliance found within nature.", "year": 2018, "price": "8000", "sold": true, "status": "Original · Sold"}, {"id": "art8", "category": "ACRYLIC ON CANVAS", "title": "MYSTIQUE MOUNTAINS", "image": "row8.jpg", "medium_line": "36 × 24 inches · Acrylic on Canvas · 2018", "story": "Inspired by the rain-soaked hills of Kodaikanal, this piece captures the quiet nostalgia of misty roads, a lone hillside home, and the comforting trail of smoke rising from a small dhaba serving hot tea and maggi. A gentle ode to solitude, memory, and the warmth hidden within mountain silence.", "year": 2018, "price": "18000", "sold": false, "status": "Original · Available"}, {"id": "art9", "category": "ACRYLIC ON CANVAS", "title": "SUBMERGED", "image": "row9.jpg", "medium_line": "24 × 12 inches · Acrylic on Canvas · 2020", "story": "An impression of a swimmer suspended beneath the surface, where light bends into shifting colours and silence feels weightless. Through transparent waters and fluid reflections, the piece captures the beauty of surrendering to stillness beneath the chaos above.", "year": 2020, "price": "5000", "sold": false, "status": "Original · Available"}, {"id": "art13", "category": "DIGITAL", "title": "Cinnamon in the air", "image": "row13.jpg", "medium_line": "Digital Prints · 2020", "sizes": "A3, A4", "story": "A stolen moment of sweetness: me, the cat, fishing, and the gentle perfume of memory.", "year": 2020, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art14", "category": "DIGITAL", "title": "Silence", "image": "row14.jpg", "medium_line": "Digital Prints · 2020", "sizes": "A3, A4", "story": "Friends hiding in PreyLand's woods, waiting for full moon night when werewolves prowl and the sky speaks in thunder. From the mini series, Times in PreyLand, telling a fictional story of friends hiding in the woods, fearing incoming predators.", "year": 2020, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art15", "category": "DIGITAL", "title": "Oh deer", "image": "row15.jpg", "medium_line": "Digital Prints · 2020", "sizes": "A3, A4", "story": "Whispered fears in double portraits; what emerges when you stare into the dark and it stares back at you. From the mini series, Times in PreyLand, telling a fictional story of friends hiding in the woods, fearing incoming predators.", "year": 2020, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art16", "category": "DIGITAL", "title": "Cat sightings", "image": "row16.jpg", "medium_line": "Digital Prints · 2020", "sizes": "A3, A4", "story": "From the mini series,Times in PreyLand, telling a fictional story of friends hiding in the woods where aliens walk among us unnoticed, waiting for spring's messenger to arrive.", "year": 2020, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art17", "category": "DIGITAL", "title": "Norse", "image": "row17.jpg", "medium_line": "Digital Prints · 2019", "sizes": "A3, A4", "story": "Mjollnir, Odin's gift forged in myth; a hammer of tangled lines that carries the weight of Norse gods and ancient thunder.", "year": 2019, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art18", "category": "DIGITAL", "title": "Wanderer", "image": "row18.jpg", "medium_line": "Digital Prints · 2019", "sizes": "A3, A4", "story": "A giant ocean dweller moving through darkness, dwarfing the tiny human who dares to dive into its mystery.", "year": 2019, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art19", "category": "DIGITAL", "title": "Monalisa", "image": "row19.jpg", "medium_line": "Digital Prints · 2019", "sizes": "A3, A4", "story": "A reimagined enigma rendered in fluid, dancing lines; where the classical portrait dissolves into intricate, organic texture.", "year": 2019, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art20", "category": "DIGITAL", "title": "Spaceship", "image": "row20.jpg", "medium_line": "Digital Prints · 2019", "sizes": "A3, A4", "story": "Inspired by Sting rays in movement; spaceships that sails through the ocean of stars, moon and planets defying gravity and physics alike.", "year": 2019, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art21", "category": "DIGITAL", "title": "Eat pray love", "image": "row21.jpg", "medium_line": "Digital Prints· 2021", "sizes": "A3, A4", "story": "Cycling through jungle green, breathing freedom, feeling the wild pulse of life in its rawest form.", "year": 2021, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art22", "category": "DIGITAL", "title": "Veri Peri Relatable", "image": "row22.jpg", "medium_line": "Digital Prints · 2021", "sizes": "A3, A4", "story": "Color of the year wrapped in solitude; me, music, and the quiet joy of blooming through uncertain times.", "year": 2021, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art23", "category": "DIGITAL", "title": "Tea Time", "image": "row23.jpg", "medium_line": "Digital Prints · 2021", "sizes": "A3, A4", "story": "Homecoming through Jharkhand's local villages, Latehar; that sacred ritual of tea and togetherness that holds everything together.", "year": 2021, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art24", "category": "DIGITAL", "title": "Moments like these", "image": "row24.jpg", "medium_line": "Digital Prints · 2022", "sizes": "A3, A4", "story": "Travel-worn and covid-tired, I found myself in Goa, remembering that real joy lives in the unplanned, the breathless, the now.", "year": 2022, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art25", "category": "DIGITAL", "title": "We lost the sea", "image": "row25.jpg", "medium_line": "Digital Prints · 2022", "sizes": "A3, A4", "story": "Drawn from longing; a diver chasing water, seeking the rhythm and freedom that only ocean depths can offer.", "year": 2022, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art26", "category": "DIGITAL", "title": "Ladybug", "image": "row26.jpg", "medium_line": "Digital Prints · 2022", "sizes": "A3, A4", "story": "A gentle surprise in the garden; a moment of wonder where nature whispers its small, pretty perfect companionship.", "year": 2022, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art27", "category": "DIGITAL", "title": "Double Decker Auto - JUGAAD", "image": "row27.jpg", "medium_line": "Digital Prints · 2022", "sizes": "A3, A4", "story": "It happens only in india: the art of survival, a DNA packed tight with joy and the quirky genius of making do. A series, capturing ‘Extraordinary in Ordinary’ for India art fair, Digital Artist in  Residence programme 2023.", "year": 2022, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art28", "category": "DIGITAL", "title": "Barber on motorbike - JUGAAD", "image": "row28.jpg", "medium_line": "Digital Prints · 2022", "sizes": "A3, A4", "story": "It happens only in india. Capturing ‘Extraordinary in Ordinary’. A series for India art fair, Digital Artist in  Residence programme 2023. Street-side skill meets mobility; capturing the instinctive ingenuity woven into the DNA of ordinary Indians.", "year": 2022, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art29", "category": "DIGITAL", "title": "Onion with helmet - JUGAAD", "image": "row29.jpg", "medium_line": "Digital Prints · 2022", "sizes": "A3, A4", "story": "It happens only in india. Capturing ‘Extraordinary in Ordinary’. A series for India art fair, Digital Artist in  Residence programme 2023. A humble vegetable helmeted for the ride; celebrating the absurd, beautiful logic of Indian make-shift living.", "year": 2022, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art30", "category": "DIGITAL", "title": "Babaji", "image": "row30.jpg", "medium_line": "Digital Prints · 2022", "sizes": "A3, A4", "story": "It happens only in india. Capturing ‘Extraordinary in Ordinary’. A series for India art fair, Digital Artist in  Residence programme 2023. An elder balancing life's chaos on a staff; the Indian spirit of survival, skill, and quirky genius made divine.", "year": 2022, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art31", "category": "DIGITAL", "title": "Gully Cricket", "image": "row31.jpg", "medium_line": "Digital Prints · 2022", "sizes": "A3, A4", "story": "It happens only in india. Capturing ‘Extraordinary in Ordinary’. A series for India art fair, Digital Artist in  Residence programme 2023. Cricket stripped to its essence: dust, determination, and the makeshift magic of playing with nothing but heart.", "year": 2022, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art32", "category": "DIGITAL", "title": "Simpsons whale", "image": "row32.jpg", "medium_line": "Digital Prints · 2023", "sizes": "A3, A4", "story": "A doodle dive into thick strokes and electric blocked colors; where the whale becomes a symphony of chaos and wonder.", "year": 2023, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art33", "category": "DIGITAL", "title": "Namma Bengaluru", "image": "row33.jpg", "medium_line": "Digital Prints · 2023", "sizes": "A3, A4", "story": "City traffic, night chaos, and the soul of Bangalore rendered in bold colors and intricate line work.", "year": 2023, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art34", "category": "DIGITAL", "title": "Game of Thrones", "image": "row34.jpg", "medium_line": "Digital Prints · 2023", "sizes": "A3, A4", "story": "Fire and ice collide in thick, bright strokes; a world shaken by throne ambitions and the weight of power, Khaleesi, taking over the world with fire and blood.", "year": 2023, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art35", "category": "DIGITAL", "title": "Guns & Roses", "image": "row35.jpg", "medium_line": "Digital Prints · 2024", "sizes": "A3, A4", "story": "The greatest music of all time, a tribute to Guns and Roses, captured in doodle form; rebellion wrapped in pink and gold.", "year": 2024, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art36", "category": "DIGITAL", "title": "Rolling stone logo", "image": "row36.jpg", "medium_line": "Digital Prints · 2023", "sizes": "A3, A4", "story": "A meditation on timeless rebellion; the iconic Rolling Stones emblem, a derivative from Indian goddess Kaali.", "year": 2023, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art37", "category": "DIGITAL", "title": "Morni", "image": "row37.jpg", "medium_line": "Digital Prints · 2023", "sizes": "A3, A4", "story": "Doodle bold and peacock-proud; where thick strokes celebrate the bird that wears the world's colors unapologetically. Inspired a silly peacock pencil sharpener I own", "year": 2023, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art38", "category": "DIGITAL", "title": "Truck art", "image": "row38.jpg", "medium_line": "Digital Prints · 2023", "sizes": "A3, A4", "story": "Folk art and quirky typography collide; celebrating the unfiltered poetry of kitsch Indian trucks and roadside dreams.", "year": 2023, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art39", "category": "DIGITAL", "title": "World cup", "image": "row39.jpg", "medium_line": "Digital Prints · 2023", "sizes": "A3, A4", "story": "The fever of 2023 India Australia; a doodle celebration of sport, color, and the world holding its breath.", "year": 2023, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art40", "category": "DIGITAL", "title": "Boat", "image": "row40.jpg", "medium_line": "Digital Prints · 2015", "sizes": "A3, A4", "story": "White ink thinking through apocalyptic waters; a meditation on Tsukuba's tsunami and what floats when everything else sinks.", "year": 2015, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art41", "category": "DIGITAL", "title": "Summer cheers", "image": "row41.jpg", "medium_line": "Digital Prints · 2017", "sizes": "A3, A4", "story": "SUNday. Sunshine in a glass, refreshing and defiant; a toast to brightness even when the night tries to claim it.", "year": 2017, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art42", "category": "DIGITAL", "title": "Raindrops", "image": "row42.jpg", "medium_line": "Digital Prints · 2017", "sizes": "A3, A4", "story": "Bangalore's monsoon captured on an office window; droplets dancing their own distraction against the mundane.", "year": 2017, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art43", "category": "DIGITAL", "title": "Fish", "image": "row43.jpg", "medium_line": "Digital Prints · 2013", "sizes": "A3, A4", "story": "A train journey into mystery; doodled on moving metal, where the fish swims through darkness and solitude.", "year": 2013, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art44", "category": "DIGITAL", "title": "Night sky", "image": "row44.jpg", "medium_line": "Digital Prints · 2012", "sizes": "A3, A4", "story": "Love birds and restless souls peering through full moon's glow; mysteries whispered in the dark, layered clouds.", "year": 2012, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art45", "category": "DIGITAL", "title": "Bob Marley", "image": "row45.jpg", "medium_line": "Digital Prints · 2014", "sizes": "A3, A4", "story": "A scribble portrait of resistance; Bob Marley, where the soul speaks louder than any photograph ever could.", "year": 2014, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art46", "category": "DIGITAL", "title": "In action", "image": "row46.jpg", "medium_line": "Digital Prints · 2012", "sizes": "A3, A4", "story": "A dancer suspended in movement, silhouetted against blue; where the body becomes poetry and freedom takes flight.", "year": 2012, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art47", "category": "DIGITAL", "title": "GreyFish", "image": "row47.jpg", "medium_line": "Digital Prints · 2014", "sizes": "A3, A4", "story": "Dancing between drought and deluge; a dark, deserted landscape where life still insists on blooming in the margins.", "year": 2014, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art48", "category": "DIGITAL", "title": "At home star wars", "image": "row48.jpg", "medium_line": "Digital Prints · 2017", "sizes": "A3, A4", "story": "Sunday afternoon on the couch, sketchbook in hand; where pop culture and cozy domesticity merge into art.", "year": 2017, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art49", "category": "DIGITAL", "title": "ANYBODY IN THERE", "image": "row49.jpg", "medium_line": "Digital Prints · 2018", "sizes": "A3, A4", "story": "A meditation on cosmic solitude; drifting through the void where otherworldly longings become almost tangible. Tribute to Pink floyd’s - Anybody in there, psychedelic astronaut head gear in space.", "year": 2018, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art50", "category": "DIGITAL", "title": "Shine on you crazy diamond", "image": "row50.jpg", "medium_line": "Digital Prints · 2018", "sizes": "A3, A4", "story": "Pink Floyd's psychedelic journey rendered in electric color; a tribute to the listening soul and its fractured light. Psychedelic mountains with air-marine ship shining on crazy pile of diamond.", "year": 2018, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art51", "category": "DIGITAL", "title": "Andamans", "image": "row51.jpg", "medium_line": "Digital Prints · 2018", "sizes": "A3, A4", "story": "Serene waters and pure white sand; a moment of morning stillness where the ocean whispers its ancient secrets.", "year": 2018, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art52", "category": "DIGITAL", "title": "90's", "image": "row52.jpg", "medium_line": "Digital Prints · 2018", "sizes": "A3, A4", "story": "A sketch of carrying nostalgia of 90s, games, candies, digital influence made our memories tangible, playful yet dreamy.", "year": 2018, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art53", "category": "DIGITAL", "title": "Do or Die", "image": "row53.jpg", "medium_line": "Digital Prints · 2018", "sizes": "A3, A4", "story": "An instance of trying and dying in the computer game; LIMBO, where pixels become philosophy and failure feels oddly alive.", "year": 2018, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art54", "category": "DIGITAL", "title": "Castle", "image": "row54.jpg", "medium_line": "Digital Prints · 2018", "sizes": "A3, A4", "story": "Return to castle after war.", "year": 2018, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art55", "category": "DIGITAL", "title": "Breathe", "image": "row55.jpg", "medium_line": "Digital Prints · 2018", "sizes": "A3, A4", "story": "Underwater serenity meets land; scuba diving through Andamans, realizing how you hear silence when you stop holding your breath.", "year": 2018, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art56", "category": "DIGITAL", "title": "Aurora", "image": "row56.jpg", "medium_line": "", "sizes": "", "story": "", "year": null, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art59", "category": "GOUACHE/ACRYLIC PENS DIGITAL PRINTS", "title": "CAT IN THE SCREAM", "image": "row59.jpg", "medium_line": "Gouache Prints · 2024", "sizes": "A3, A4", "story": "A cheeky cat strikes Munch's iconic pose, screaming into the void with the same existential angst—because even felines have feelings they need to express.", "year": 2024, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art60", "category": "GOUACHE/ACRYLIC PENS DIGITAL PRINTS", "title": "SELFIE OF A GIRAFFE", "image": "row60.jpg", "medium_line": "Gouache Prints · 2024", "sizes": "A3, A4", "story": "Playfulness meets vulnerability—a gentle giant documenting its own fleeting moment of joy and self-awareness", "year": 2024, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art61", "category": "GOUACHE/ACRYLIC PENS DIGITAL PRINTS", "title": "BIRD EYE VIEW", "image": "row61.jpg", "medium_line": "Acrylic Marker Prints · 2024", "sizes": "A3, A4", "story": "Conceived at 30,000 feet, where the city's geometry meets nature's wildness; a meditation on perspective shift and how everything looks different when you rise above it.", "year": 2024, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art62", "category": "GOUACHE/ACRYLIC PENS DIGITAL PRINTS", "title": "BLENDING IN BLUE", "image": "row62.jpg", "medium_line": "Acrylic Marker Prints · 2024", "sizes": "A3, A4", "story": "A love letter to Kochi's waters, where fish and boats are all you see; intricate patterns dance together in the spirit of sacred geometry, exploring how life blooms in the smallest spaces.", "year": 2024, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art63", "category": "GOUACHE/ACRYLIC PENS DIGITAL PRINTS", "title": "STARRY NIGHT", "image": "row63.jpg", "medium_line": "Acrylic Marker Prints · 2024", "sizes": "A3, A4", "story": "A pointillist celebration of cosmic wonder Van Gogh’s famous ‘The starry night’, with scattered stars and celestial colors, each speck a quiet reminder that we're never truly alone.", "year": 2024, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art64", "category": "GOUACHE/ACRYLIC PENS DIGITAL PRINTS", "title": "LANDSCAPES", "image": "row64.jpg", "medium_line": "Acrylic Marker Prints · 2024", "sizes": "A3, A4", "story": "Rolling hills drawn with intention, capturing the peaceful rhythm of earth breathing beneath a golden sun.", "year": 2024, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art65", "category": "GOUACHE/ACRYLIC PENS DIGITAL PRINTS", "title": "MORNING GLORY", "image": "row65.jpg", "medium_line": "Acrylic Marker Prints · 2024", "sizes": "A3, A4", "story": "Explosive tenderness; a flower unraveling its petals without apology, burning bright in its own season.", "year": 2024, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art66", "category": "GOUACHE/ACRYLIC PENS DIGITAL PRINTS", "title": "THE BIG AND THE LITTLE", "image": "row66.jpg", "medium_line": "Gouache Prints · 2024", "sizes": "A3, A4", "story": "Two sharks intertwined in water, rendered in gouache and Madhubani tradition; a meditation on souls finding wholeness in togetherness.", "year": 2024, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art67", "category": "GOUACHE/ACRYLIC PENS DIGITAL PRINTS", "title": "LLAMA IN THE DESERT", "image": "row67.jpg", "medium_line": "Gouache Prints · 2024", "sizes": "A3, A4", "story": "A dreamer adorned in Madhubani patterns and gouache warmth, moving through barren land with grace, carrying ancestral stories in every brushstroke.", "year": 2024, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art68", "category": "GOUACHE/ACRYLIC PENS DIGITAL PRINTS", "title": "DESSERTED", "image": "row68.jpg", "medium_line": "Gouache Prints · 2024", "sizes": "A3, A4", "story": "The desert stripped bold, bare, raw, alive—a landscape that speaks in color blocks rather than words.", "year": 2024, "a3_pricing": [{"price": "2,450/1,200 INR", "label": "Prints on Canvas w/o frame"}, {"price": "1,800/900 INR", "label": "Prints on Paper w/o frame"}], "a4_pricing": [{"price": "1,299/650 INR", "label": "Prints on Canvas w/o frame"}, {"price": "900/450 INR", "label": "Prints on Paper w/o frame"}], "status": "Digital Print · Available"}, {"id": "art72", "category": "CLAY", "title": "Pink Floyd Fridge Magnet", "image": "row72.jpg", "price": "250", "status": "Handmade · Available", "subgroup": "Fridge Magnets", "year": null}, {"id": "art73", "category": "CLAY", "title": "Led Zepplin Fridge Magnet", "image": "row73.jpg", "price": "250", "status": "Handmade · Available", "subgroup": "Fridge Magnets", "year": null}, {"id": "art74", "category": "CLAY", "title": "Yellow Submarine Fridge Magnet", "image": "row74.jpg", "price": "250", "status": "Handmade · Available", "subgroup": "Fridge Magnets", "year": null}, {"id": "art75", "category": "CLAY", "title": "Cat Fridge Magnet", "image": "row75.jpg", "price": "250", "status": "Handmade · Available", "subgroup": "Fridge Magnets", "year": null}, {"id": "art76", "category": "CLAY", "title": "Croc Fridge Magnet", "image": "row76.jpg", "price": "250", "status": "Handmade · Available", "subgroup": "Fridge Magnets", "year": null}, {"id": "art77", "category": "CLAY", "title": "Pigeon Fridge Magnet", "image": "row77.jpg", "price": "250", "status": "Handmade · Available", "subgroup": "Fridge Magnets", "year": null}, {"id": "art78", "category": "CLAY", "title": "Sweater Fridge Magnet", "image": "row78.jpg", "price": "250", "status": "Handmade · Available", "subgroup": "Fridge Magnets", "year": null}, {"id": "art79", "category": "CLAY", "title": "Kismi Bar Fridge Magnet", "image": "row79.jpg", "price": "150", "status": "Handmade · Available", "subgroup": "Fridge Magnets", "year": null}, {"id": "art80", "category": "CLAY", "title": "Mango Bite Fridge Magnet", "image": "row80.jpg", "price": "150", "status": "Handmade · Available", "subgroup": "Fridge Magnets", "year": null}, {"id": "art81", "category": "CLAY", "title": "Ponyo Fridge Magnet", "image": "row81.jpg", "price": "150", "status": "Handmade · Available", "subgroup": "Fridge Magnets", "year": null}, {"id": "art82", "category": "CLAY", "title": "Peach Socks Fridge Magnet", "image": "row82.jpg", "price": "150", "status": "Handmade · Available", "subgroup": "Fridge Magnets", "year": null}, {"id": "art83", "category": "CLAY", "title": "Pineapple Fridge Magnet", "image": "row83.jpg", "price": "150", "status": "Handmade · Available", "subgroup": "Fridge Magnets", "year": null}, {"id": "art84", "category": "CLAY", "title": "Bird Fridge Magnet", "image": "row84.jpg", "price": "150", "status": "Handmade · Available", "subgroup": "Fridge Magnets", "year": null}, {"id": "art85", "category": "CLAY", "title": "Giraffe Fridge Magnet", "image": "row85.jpg", "price": "150", "status": "Handmade · Available", "subgroup": "Fridge Magnets", "year": null}, {"id": "art86", "category": "CLAY", "title": "Frog Fridge Magnet", "image": "row86.jpg", "price": "150", "status": "Handmade · Available", "subgroup": "Fridge Magnets", "year": null}, {"id": "art87", "category": "CLAY", "title": "Heart Pair and Fish Pair", "image": "row87.jpg", "price": "100 per piece", "status": "Handmade · Available", "subgroup": "Pairs & Singles", "year": null}, {"id": "art88", "category": "CLAY", "title": "Fish Pair and Village Pair", "image": "row88.jpg", "price": "100 per piece", "status": "Handmade · Available", "subgroup": "Pairs & Singles", "year": null}, {"id": "art89", "category": "CLAY", "title": "Lemon Pair and Fish single", "image": "row89.jpg", "price": "100 per piece", "status": "Handmade · Available", "subgroup": "Pairs & Singles", "year": null}, {"id": "art90", "category": "CLAY", "title": "Fish Pair and Carrot Pair", "image": "row90.jpg", "price": "100 per piece", "status": "Handmade · Available", "subgroup": "Pairs & Singles", "year": null}, {"id": "art91", "category": "CLAY", "title": "Donut Pair", "image": "row91.jpg", "price": "100 per piece", "status": "Handmade · Available", "subgroup": "Pairs & Singles", "year": null}, {"id": "art92", "category": "CLAY", "title": "Avocado and leaf Pair", "image": "row92.jpg", "price": "100 per piece", "status": "Handmade · Available", "subgroup": "Pairs & Singles", "year": null}, {"id": "art93", "category": "CLAY", "title": "Dead fish and tomato Pair", "image": "row93.jpg", "price": "100 per piece", "status": "Handmade · Available", "subgroup": "Pairs & Singles", "year": null}, {"id": "art94", "category": "CLAY", "title": "Octopus and Flower Pair", "image": "row94.jpg", "price": "100 per piece", "status": "Handmade · Available", "subgroup": "Pairs & Singles", "year": null}, {"id": "art95", "category": "CLAY", "title": "Fish Pair", "image": "row95.jpg", "price": "100 per piece", "status": "Handmade · Available", "subgroup": "Pairs & Singles", "year": null}, {"id": "art96", "category": "CLAY", "title": "Whit Cat Single and Orange Cat Single", "image": "row96.jpg", "price": "100 per piece", "status": "Handmade · Available", "subgroup": "Pairs & Singles", "year": null}, {"id": "art97", "category": "CLAY", "title": "Bird Single and Orange Single", "image": "row97.jpg", "price": "100 per piece", "status": "Handmade · Available", "subgroup": "Pairs & Singles", "year": null}, {"id": "art98", "category": "CLAY", "title": "Starfish Single and Pigeon Single", "image": "row98.jpg", "price": "100 per piece", "status": "Handmade · Available", "subgroup": "Pairs & Singles", "year": null}, {"id": "art99", "category": "CLAY", "title": "Octopus Jewelry Trinket box", "image": "row99.jpg", "price": "300", "status": "Handmade · Available", "subgroup": "Vases & Trinkets", "year": null}, {"id": "art100", "category": "CLAY", "title": "Fox Mini Vase", "image": "row100.jpg", "price": "500", "status": "Handmade · Available", "subgroup": "Vases & Trinkets", "year": null}, {"id": "art101", "category": "CLAY", "title": "Dog Mini Vase", "image": "row101.jpg", "price": "500", "status": "Handmade · Available", "subgroup": "Vases & Trinkets", "year": null}, {"id": "art102", "category": "CLAY", "title": "Cat Mini Vase", "image": "row102.jpg", "price": "300", "status": "Handmade · Available", "subgroup": "Vases & Trinkets", "year": null}, {"id": "art103", "category": "CLAY", "title": "Strawberry Cat Mini Vase", "image": "row103.jpg", "price": "300", "status": "Handmade · Available", "subgroup": "Vases & Trinkets", "year": null}, {"id": "art104", "category": "CLAY", "title": "Duck Mini Vase", "image": "row104.jpg", "price": "300", "status": "Handmade · Available", "subgroup": "Vases & Trinkets", "year": null}, {"id": "art105", "category": "CLAY", "title": "Duck Keychain", "image": "row105.jpg", "price": "250", "status": "Handmade · Available", "subgroup": "Keychains & Charms", "year": null}, {"id": "art106", "category": "CLAY", "title": "Breakfast Charm - Burger & Egg", "image": "row106.jpg", "price": "150", "status": "Handmade · Available", "subgroup": "Keychains & Charms", "year": null}, {"id": "art107", "category": "CLAY", "title": "Breakfast Charm - Avocado and Brioche", "image": "row107.jpg", "price": "150", "status": "Handmade · Available", "subgroup": "Keychains & Charms", "year": null}, {"id": "art108", "category": "CLAY", "title": "Breakfast Charm - Bread and Pancake", "image": "row108.jpg", "price": "150", "status": "Handmade · Available", "subgroup": "Keychains & Charms", "year": null}, {"id": "art109", "category": "CLAY", "title": "Breakfast Charm - Tomato and Dragonfruit", "image": "row109.jpg", "price": "150", "status": "Handmade · Available", "subgroup": "Keychains & Charms", "year": null}];
+</script>
+<script>
+const IG_URL = "https://www.instagram.com/theimperfectsoul_varsha?igsh=Znp3bXl3a3RsdjJl&utm_source=qr";
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('hero-bg').style.backgroundImage = "url('images/row55.jpg')";
+
+// mobile menu
+const menuToggle = document.getElementById('menu-toggle');
+const navlinks = document.getElementById('navlinks');
+menuToggle.addEventListener('click', () => navlinks.classList.toggle('open'));
+navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navlinks.classList.remove('open')));
+
+// swim progress — fish faces the direction it's swimming (nose leads)
+const fish = document.getElementById('swim-fish');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function updateSwim(){
+  const h = document.documentElement;
+  const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
+  const trackWidth = window.innerWidth - 40;
+  const facing = scrolled >= (fish._last||0) ? -1 : 1;
+  fish.style.transform = `translateX(${20 + scrolled*trackWidth}px) scaleX(${facing})`;
+  fish._last = scrolled;
+}
+if(!reduceMotion){ window.addEventListener('scroll', updateSwim); updateSwim(); }
+else { fish.style.display = 'none'; }
+
+// ---------- Helpers ----------
+function inrPrice(v){
+  if(!v) return '';
+  const n = v.toString().replace(/[^0-9.]/g,'');
+  if(!n) return v;
+  return '₹' + Number(n).toLocaleString('en-IN');
+}
+
+function buildPagination(container, totalItems, perPage, currentPage, onPageChange){
+  const totalPages = Math.max(1, Math.ceil(totalItems / perPage));
+  if(totalPages <= 1){ container.innerHTML = ''; return; }
+  let pages = [];
+  for(let p = 1; p <= totalPages; p++){
+    if(p === 1 || p === totalPages || Math.abs(p - currentPage) <= 1) pages.push(p);
+    else if(pages[pages.length-1] !== '…') pages.push('…');
+  }
+  let html = `<button class="page-btn page-arrow" data-page="${currentPage-1}" ${currentPage===1?'disabled':''} aria-label="Previous page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button>`;
+  html += pages.map(p => p === '…'
+    ? `<span class="page-ellipsis">···</span>`
+    : `<button class="page-btn ${p===currentPage?'active':''}" data-page="${p}">${p}</button>`
+  ).join('');
+  html += `<button class="page-btn page-arrow" data-page="${currentPage+1}" ${currentPage===totalPages?'disabled':''} aria-label="Next page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>`;
+  container.innerHTML = html;
+  container.querySelectorAll('.page-btn:not(:disabled)').forEach(btn => {
+    btn.addEventListener('click', () => onPageChange(parseInt(btn.dataset.page)));
+  });
+}
+
+// ---------- Collection ----------
+const collectionCats = ['ACRYLIC ON CANVAS','DIGITAL','GOUACHE/ACRYLIC PENS DIGITAL PRINTS'];
+const collectionItems = CATALOG.filter(i => collectionCats.includes(i.category))
+  .sort((a,b) => (b.year||0) - (a.year||0));
+const grid = document.getElementById('collection-grid');
+const collectionPagination = document.getElementById('collection-pagination');
+const PER_PAGE = 9;
+let collectionPage = 1;
+let collectionFilter = 'all';
+
+function renderCollection(){
+  const items = collectionFilter === 'all' ? collectionItems : collectionItems.filter(i => i.category === collectionFilter);
+  const start = (collectionPage-1) * PER_PAGE;
+  const pageItems = items.slice(start, start + PER_PAGE);
+
+  grid.innerHTML = pageItems.map(i => `
+    <div class="card ${i.sold ? 'is-sold' : ''}" data-id="${i.id}">
+      <div class="frame">
+        <img src="images/${i.image}" alt="${i.title}" loading="lazy">
+        ${i.sold ? '<span class="badge sold">Sold</span>' : (i.category==='ACRYLIC ON CANVAS' ? '<span class="badge">Original</span>' : '')}
+      </div>
+      <div class="meta">
+        <h3>${i.title}</h3>
+        <div class="medium">${i.medium_line || ''}</div>
+        ${i.story ? `<div class="desc">${i.story}</div>` : ''}
+        <div class="price-row">
+          <span class="price-tag ${i.sold ? 'muted' : ''}">${i.price ? inrPrice(i.price) : 'View pricing'}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => openModal(card.dataset.id));
+  });
+  buildPagination(collectionPagination, items.length, PER_PAGE, collectionPage, (p) => {
+    collectionPage = p;
+    renderCollection();
+    document.getElementById('collection').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+}
+renderCollection();
+
+document.querySelectorAll('#tabs .tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('#tabs .tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    collectionFilter = tab.dataset.filter;
+    collectionPage = 1;
+    renderCollection();
+  });
+});
+
+// ---------- Clay ----------
+const clayItems = CATALOG.filter(i => i.category === 'CLAY');
+const clayGrid = document.getElementById('clay-grid');
+const clayPagination = document.getElementById('clay-pagination');
+const CLAY_PER_PAGE = 12;
+let clayPage = 1;
+let clayFilter = 'all';
+
+function renderClay(){
+  const items = clayFilter === 'all' ? clayItems : clayItems.filter(i => i.subgroup === clayFilter);
+  const start = (clayPage-1) * CLAY_PER_PAGE;
+  const pageItems = items.slice(start, start + CLAY_PER_PAGE);
+
+  clayGrid.innerHTML = pageItems.map(i => `
+    <div class="card" data-id="${i.id}">
+      <div class="frame">
+        <img src="images/${i.image}" alt="${i.title}" loading="lazy">
+      </div>
+      <div class="meta">
+        <h3>${i.title}</h3>
+        <div class="price-row">
+          <span class="price-tag">${inrPrice(i.price)}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  clayGrid.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => openModal(card.dataset.id));
+  });
+  buildPagination(clayPagination, items.length, CLAY_PER_PAGE, clayPage, (p) => {
+    clayPage = p;
+    renderClay();
+    document.getElementById('clay').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+}
+renderClay();
+document.querySelectorAll('#clay-tabs .tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('#clay-tabs .tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    clayFilter = tab.dataset.filter;
+    clayPage = 1;
+    renderClay();
+  });
+});
+
+// ---------- Modal ----------
+const modal = document.getElementById('modal');
+const modalImage = document.getElementById('modal-image');
+const modalBody = document.getElementById('modal-body');
+
+function pricingRows(list){
+  if(!list || !list.length) return '';
+  return list.map(p => {
+    const material = p.label.toLowerCase().includes('canvas') ? 'Canvas' : 'Paper';
+    const nums = p.price.replace(/\s*INR/i,'').split('/').map(s => s.trim());
+    const withFrame = nums[0] ? inrPrice(nums[0]) : '';
+    const withoutFrame = nums[1] ? inrPrice(nums[1]) : '';
+    return `<div class="price-line"><span>${material}</span><span>${withFrame} with frame · ${withoutFrame} without</span></div>`;
+  }).join('');
+}
+
+function openModal(id){
+  const item = CATALOG.find(i => i.id === id);
+  if(!item) return;
+  modalImage.src = 'images/' + item.image;
+  modalImage.alt = item.title;
+
+  let html = `<button class="modal-close" onclick="closeModal()" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="22" height="22"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>`;
+  html += `<div class="eyebrow">${item.category === 'CLAY' ? 'Clay Miniature' : item.category.replace('GOUACHE/ACRYLIC PENS DIGITAL PRINTS','Gouache & Marker Print')}</div>`;
+  html += `<h3>${item.title}</h3>`;
+  if(item.medium_line) html += `<div class="medium">${item.medium_line}</div>`;
+  if(item.sizes) html += `<div class="medium">Available sizes: ${item.sizes}</div>`;
+  if(item.story) html += `<p class="modal-story">${item.story}</p>`;
+
+  if(item.category === 'ACRYLIC ON CANVAS'){
+    if(item.sold){
+      html += `<div class="price-block"><div class="label">Status</div><div class="sold-note">Original — Sold · sold for ${inrPrice(item.price)}</div></div>`;
+      html += `<a class="inquire-btn" href="${IG_URL}" target="_blank" rel="noopener">DM for a commission
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>`;
+    } else {
+      html += `<div class="price-block"><div class="label">Price</div><div class="price-single">${inrPrice(item.price)}</div></div>`;
+      html += `<a class="inquire-btn" href="${IG_URL}" target="_blank" rel="noopener">Inquire on Instagram
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>`;
+    }
+  } else if(item.category === 'CLAY'){
+    html += `<div class="price-block"><div class="label">Price</div><div class="price-single">${inrPrice(item.price)}${item.price && item.price.toLowerCase().includes('per piece') ? ' / piece' : ''}</div></div>`;
+    html += `<a class="inquire-btn" href="${IG_URL}" target="_blank" rel="noopener">Inquire on Instagram
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>`;
+  } else {
+    html += `<div class="price-block"><div class="label">A3 Pricing</div>${pricingRows(item.a3_pricing)}</div>`;
+    html += `<div class="price-block"><div class="label">A4 Pricing</div>${pricingRows(item.a4_pricing)}</div>`;
+    html += `<a class="inquire-btn" href="${IG_URL}" target="_blank" rel="noopener">Inquire on Instagram
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>`;
+  }
+
+  modalBody.innerHTML = html;
+  modal.classList.add('open');
+  requestAnimationFrame(() => modal.classList.add('show'));
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(){
+  modal.classList.remove('show');
+  document.body.style.overflow = '';
+  setTimeout(() => modal.classList.remove('open'), 300);
+}
+modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
