@@ -270,10 +270,17 @@
   .modal-nav.next{right:16px;}
   .modal-body{padding:56px; position:relative; max-height:94vh; overflow-y:auto; -webkit-overflow-scrolling:touch;}
   .modal-close{
-    position:absolute; top:22px; right:22px; background:none; border:none; color:var(--paper);
-    cursor:pointer; opacity:0.7; padding:6px;
+    position:absolute; top:16px; right:16px; z-index:6;
+    width:38px; height:38px; border-radius:50%; background:rgba(20,18,15,0.55);
+    border:1px solid rgba(239,232,216,0.25); color:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; opacity:0.9; transition:background .2s, opacity .2s;
   }
-  .modal-close:hover{opacity:1;}
+  .modal-close:hover{opacity:1; background:rgba(20,18,15,0.85);}
+  .journal-modal-body .modal-close{
+    top:22px; right:22px; background:none; border:none; width:auto; height:auto; opacity:0.7;
+  }
+  .journal-modal-body .modal-close:hover{background:none; opacity:1;}
   .modal-body h3{font-size:36px; font-style:italic; margin-bottom:8px;}
   .modal-body .medium{font-family:'DM Mono',monospace; font-size:13px; color:var(--ash); letter-spacing:0.05em;}
   .modal-story{margin-top:26px; color:var(--paper-dim); font-size:16.5px; line-height:1.8;}
@@ -371,14 +378,15 @@
       max-width:100%; width:100%; height:100%; max-height:100%;
       border-radius:0;
     }
-    .modal-img{height:42vh; flex:0 0 42vh;}
-    .modal-img img{max-height:42vh; object-fit:cover;}
+    .modal-img{height:48vh; flex:0 0 48vh;}
+    .modal-img img{max-height:48vh; object-fit:contain;}
     .modal-body{
       flex:1 1 auto; padding:28px 24px 40px;
       max-height:none; overflow-y:auto; -webkit-overflow-scrolling:touch;
     }
     .modal-body h3{font-size:28px;}
     .modal-nav{width:38px; height:38px;}
+    .modal-close{width:36px; height:36px;}
     .journal-modal-inner{width:100%; height:100%; max-height:100%; border-radius:0;}
     .journal-modal-body{padding:32px 24px 48px;}
     .journal-modal-body h3{font-size:28px;}
@@ -575,6 +583,9 @@
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div class="modal-img">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
       <button class="modal-nav prev" id="modal-prev" aria-label="Previous artwork">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
       </button>
@@ -820,10 +831,7 @@ function renderModalContent(){
   modalImage.src = 'images/' + item.image;
   modalImage.alt = item.title;
 
-  let html = `<button class="modal-close" onclick="closeModal()" aria-label="Close">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="22" height="22"><path d="M6 6l12 12M18 6L6 18"/></svg>
-    </button>`;
-  html += `<div class="eyebrow">${item.category === 'CLAY' ? 'Clay Miniature' : item.category.replace('GOUACHE/ACRYLIC PENS DIGITAL PRINTS','Gouache & Marker Print')}</div>`;
+  let html = `<div class="eyebrow">${item.category === 'CLAY' ? 'Clay Miniature' : item.category.replace('GOUACHE/ACRYLIC PENS DIGITAL PRINTS','Gouache & Marker Print')}</div>`;
   html += `<h3>${item.title}</h3>`;
   if(item.medium_line) html += `<div class="medium">${item.medium_line}</div>`;
   if(item.sizes) html += `<div class="medium">Available sizes: ${item.sizes}</div>`;
