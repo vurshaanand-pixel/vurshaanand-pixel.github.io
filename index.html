@@ -268,7 +268,7 @@
   .modal-nav svg{width:18px; height:18px;}
   .modal-nav.prev{left:16px;}
   .modal-nav.next{right:16px;}
-  .modal-body{padding:56px; position:relative; max-height:94vh; overflow-y:auto; -webkit-overflow-scrolling:touch;}
+  .modal-body{padding:56px; position:relative; max-height:94vh; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain;}
   .modal-close{
     position:absolute; top:16px; right:16px; z-index:6;
     width:38px; height:38px; border-radius:50%; background:rgba(20,18,15,0.55);
@@ -372,23 +372,41 @@
     }
     .navlinks.open{transform:translateY(0);}
     #menu-toggle{display:block;}
-    .modal-overlay{padding:0;}
+    .modal-overlay{padding:0; height:100vh; height:100dvh;}
     .modal{
       display:flex; flex-direction:column;
-      max-width:100%; width:100%; height:100%; max-height:100%;
+      max-width:100%; width:100%;
+      height:100%; max-height:100%;
       border-radius:0;
+      overflow:hidden; /* clip children; scrolling happens inside modal-body only */
     }
-    .modal-img{height:48vh; flex:0 0 48vh;}
-    .modal-img img{max-height:48vh; object-fit:contain;}
+    .modal-img{
+      flex:0 0 44%; height:44%; max-height:44%;
+      display:flex; align-items:center; justify-content:center;
+      overflow:hidden;
+    }
+    .modal-img img{width:100%; height:100%; max-height:none; object-fit:contain;}
     .modal-body{
-      flex:1 1 auto; padding:28px 24px 40px;
-      max-height:none; overflow-y:auto; -webkit-overflow-scrolling:touch;
+      flex:1 1 auto;
+      min-height:0; /* critical: without this, flex children won't shrink and overflow-y:auto is ignored */
+      padding:28px 24px 40px;
+      max-height:none;
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+      overscroll-behavior:contain; /* stop scroll from chaining into the page behind the modal */
     }
     .modal-body h3{font-size:28px;}
     .modal-nav{width:38px; height:38px;}
     .modal-close{width:36px; height:36px;}
-    .journal-modal-inner{width:100%; height:100%; max-height:100%; border-radius:0;}
-    .journal-modal-body{padding:32px 24px 48px;}
+    .journal-modal-inner{
+      width:100%; height:100%; max-height:100%; border-radius:0;
+      display:flex; flex-direction:column; overflow:hidden;
+    }
+    .journal-modal-body{
+      padding:32px 24px 48px;
+      min-height:0; flex:1 1 auto;
+      overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
+    }
     .journal-modal-body h3{font-size:28px;}
     .about-grid{grid-template-columns:1fr; gap:40px;}
     .section{padding:70px 0;}
@@ -866,6 +884,25 @@ function renderModalContent(){
   modalNextBtn.style.display = showNav ? 'flex' : 'none';
 }
 
+// ---------- Robust scroll lock (iOS Safari leaks background scroll with overflow:hidden alone) ----------
+let scrollLockY = 0;
+function lockBodyScroll(){
+  scrollLockY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollLockY}px`;
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.style.overflow = 'hidden';
+}
+function unlockBodyScroll(){
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  document.body.style.overflow = '';
+  window.scrollTo(0, scrollLockY);
+}
+
 function openModal(list, id){
   currentContext = list;
   currentIndex = list.findIndex(i => i.id === id);
@@ -873,7 +910,7 @@ function openModal(list, id){
   renderModalContent();
   modal.classList.add('open');
   requestAnimationFrame(() => modal.classList.add('show'));
-  document.body.style.overflow = 'hidden';
+  lockBodyScroll();
 }
 function showModalDelta(delta){
   if(!currentContext || !currentContext.length) return;
@@ -882,7 +919,7 @@ function showModalDelta(delta){
 }
 function closeModal(){
   modal.classList.remove('show');
-  document.body.style.overflow = '';
+  unlockBodyScroll();
   setTimeout(() => modal.classList.remove('open'), 300);
 }
 modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
@@ -999,11 +1036,11 @@ function openJournal(idx){
   journalModalBody.innerHTML = html;
   journalModal.classList.add('open');
   requestAnimationFrame(() => journalModal.classList.add('show'));
-  document.body.style.overflow = 'hidden';
+  lockBodyScroll();
 }
 function closeJournal(){
   journalModal.classList.remove('show');
-  document.body.style.overflow = '';
+  unlockBodyScroll();
   setTimeout(() => journalModal.classList.remove('open'), 300);
 }
 journalGrid.querySelectorAll('.journal-card').forEach(card => {
